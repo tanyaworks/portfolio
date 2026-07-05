@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — Tanya Jha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #07070a;
+            --bg-raised: #111115;
+            --bg-card: #15151a;
+            --bg-card-2: #191920;
+            --border: rgba(255, 255, 255, 0.09);
+            --border-soft: rgba(255, 255, 255, 0.05);
+            --text: #f1efe9;
+            --text-dim: #9b9aa3;
+            --text-faint: #6a6a73;
+            --purple: #a395f5;
+            --purple-soft: rgba(163, 149, 245, 0.14);
+            --green: #62d99a;
+            --green-soft: rgba(98, 217, 154, 0.14);
+            --orange: #f0b35a;
+            --orange-soft: rgba(240, 179, 90, 0.14);
+            --blue: #60a5fa;
+            --blue-soft: rgba(96, 165, 250, 0.14);
+            --sidebar-w: 236px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            line-height: 1.55;
+            overflow-x: hidden;
+        }
+        a { color: inherit; text-decoration: none; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        #space-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+        .nebula {
+            position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+            filter: blur(90px);
+        }
+        .nebula-a { width:700px; height:700px; top:-15%; left:-5%; background:radial-gradient(circle,rgba(163,149,245,0.15) 0%,transparent 70%); animation:floatA 18s ease-in-out infinite; }
+        .nebula-b { width:600px; height:600px; bottom:-10%; right:-5%; background:radial-gradient(circle,rgba(98,217,154,0.07) 0%,transparent 70%); animation:floatB 22s ease-in-out infinite; }
+        @keyframes floatA { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(40px,-30px) scale(1.05)} 66%{transform:translate(-20px,40px) scale(0.97)} }
+        @keyframes floatB { 0%,100%{transform:translate(0,0) scale(1)} 40%{transform:translate(-50px,30px) scale(1.08)} 70%{transform:translate(30px,-40px) scale(0.95)} }
+        @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(98,217,154,0.5)} 70%{box-shadow:0 0 0 6px rgba(98,217,154,0)} 100%{box-shadow:0 0 0 0 rgba(98,217,154,0)} }
+
+        .shell { display:flex; min-height:100vh; position:relative; z-index:1; }
+
+        /* SIDEBAR (same as main site) */
+        .sidebar {
+            width: var(--sidebar-w); flex-shrink:0;
+            border-right: 1px solid var(--border-soft);
+            display:flex; flex-direction:column; padding:34px 26px;
+            position:sticky; top:0; height:100vh; overflow:hidden;
+            background:rgba(7,7,10,0.6); backdrop-filter:blur(12px);
+        }
+        .logo {
+            display:flex; align-items:flex-start; gap:2px;
+            font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px;
+            letter-spacing:1px; margin-bottom:46px; position:relative; width:fit-content;
+        }
+        .logo::after {
+            content:''; width:5px; height:5px; border-radius:50%; background:var(--purple);
+            position:absolute; top:1px; right:-9px;
+        }
+        .back-link {
+            display:flex; align-items:center; gap:10px;
+            font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.5px;
+            color:var(--text-dim); padding:10px 12px; border-radius:7px;
+            margin-bottom:8px; transition:color .2s,background .2s;
+            width:fit-content;
+        }
+        .back-link svg { width:14px; height:14px; transition:transform .2s; }
+        .back-link:hover { color:var(--text); background:rgba(255,255,255,0.03); }
+        .back-link:hover svg { transform:translateX(-3px); }
+
+        .sidebar-bottom { margin-top:auto; }
+        .social-row { display:flex; gap:10px; margin-bottom:22px; }
+        .social-row a {
+            width:30px; height:30px; border:1px solid var(--border); border-radius:7px;
+            display:flex; align-items:center; justify-content:center;
+            color:var(--text-dim); font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700;
+            transition:border-color .15s,color .15s;
+        }
+        .social-row a svg { width:14px; height:14px; }
+        .social-row a:hover { color:var(--text); border-color:var(--text-faint); }
+        .copyright { font-size:11px; color:var(--text-faint); line-height:1.5; margin-bottom:18px; }
+        .keep-building { font-family:'Caveat',cursive; color:var(--text-dim); font-size:21px; line-height:1.15; display:flex; align-items:flex-end; gap:5px; }
+        .keep-building .bolt { color:var(--purple); font-size:16px; }
+
+        /* MAIN */
+        .main { flex:1; min-width:0; display:flex; flex-direction:column; }
+
+        .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.7s cubic-bezier(.22,1,.36,1),transform 0.7s cubic-bezier(.22,1,.36,1); }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        .reveal-delay-1 { transition-delay:0.08s; }
+        .reveal-delay-2 { transition-delay:0.16s; }
+
+        /* ══ CONTACT PAGE ══ */
+        #contact-page {
+            flex:1;
+            padding: 70px 56px 60px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        #contact-page::before {
+            content: '';
+            position: absolute;
+            width: 900px; height: 600px;
+            top: 40%; left: 30%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse, rgba(163,149,245,0.08) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .contact-inner { position: relative; z-index: 1; width:100%; }
+        .contact-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
+
+        /* LEFT COLUMN */
+        .contact-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; letter-spacing: 1.8px;
+            color: var(--text-faint); margin-bottom: 18px;
+        }
+        .contact-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700; font-size: 48px;
+            line-height: 1.08; letter-spacing: 0.5px;
+            color: var(--text); margin-bottom: 18px;
+        }
+        .contact-title .accent { color: var(--purple); }
+        .contact-subtitle {
+            color: var(--text-dim); font-size: 15px;
+            line-height: 1.65; margin-bottom: 26px; max-width: 420px;
+        }
+        .contact-status {
+            display: inline-flex; align-items: center; gap: 9px;
+            background: rgba(98,217,154,0.08);
+            border: 1px solid rgba(98,217,154,0.22);
+            border-radius: 50px;
+            padding: 8px 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; color: var(--green);
+            margin-bottom: 30px;
+            letter-spacing: 0.4px;
+        }
+        .contact-status .dot { width:7px; height:7px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
+
+        .contact-cards-vertical { display: flex; flex-direction: column; gap: 12px; }
+        .contact-card-simple {
+            background: rgba(21,21,26,0.6);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            display: flex; align-items: center; gap: 14px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.25s, transform 0.25s, background 0.25s;
+            cursor: pointer;
+        }
+        .contact-card-simple::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, var(--card-glow) 0%, transparent 65%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .contact-card-simple:hover {
+            border-color: var(--card-border-hover);
+            transform: translateX(4px);
+            background: rgba(21,21,26,0.85);
+        }
+        .contact-card-simple:hover::after { opacity: 1; }
+
+        .cc-purple { --card-glow: rgba(163,149,245,0.12); --card-border-hover: rgba(163,149,245,0.45); --card-accent: var(--purple); --card-icon-bg: var(--purple-soft); }
+        .cc-green  { --card-glow: rgba(98,217,154,0.12);  --card-border-hover: rgba(98,217,154,0.45);  --card-accent: var(--green);  --card-icon-bg: var(--green-soft); }
+        .cc-blue   { --card-glow: rgba(96,165,250,0.12);  --card-border-hover: rgba(96,165,250,0.45);  --card-accent: var(--blue);  --card-icon-bg: var(--blue-soft); }
+        .cc-orange { --card-glow: rgba(240,179,90,0.12);  --card-border-hover: rgba(240,179,90,0.45);  --card-accent: var(--orange); --card-icon-bg: var(--orange-soft); }
+
+        .cc-icon {
+            width: 46px; height: 46px; border-radius: 10px;
+            background: var(--card-icon-bg);
+            border: 1px solid rgba(255,255,255,0.07);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            position: relative; z-index: 1;
+        }
+        .cc-icon svg { width: 20px; height: 20px; color: var(--card-accent); }
+
+        .contact-card-simple > div { flex-grow: 1; position: relative; z-index: 1; min-width:0; }
+        .cc-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 1.2px;
+            color: var(--text-faint);
+            margin-bottom: 2px;
+        }
+        .cc-handle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px; color: var(--text);
+            font-weight: 500;
+            overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+        }
+
+        .cc-arrow {
+            width: 24px; height: 24px; border-radius: 6px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+            z-index: 1; flex-shrink: 0;
+        }
+        .contact-card-simple:hover .cc-arrow {
+            background: var(--card-icon-bg);
+            border-color: var(--card-border-hover);
+            transform: translate(2px, -2px);
+        }
+        .cc-arrow svg { width: 11px; height: 11px; color: var(--card-accent); }
+
+        /* RIGHT COLUMN - FORM */
+        .contact-form-card {
+            background: rgba(21,21,26,0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 34px 30px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .form-header {
+            display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+            margin-bottom: 24px;
+        }
+        .form-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700; font-size: 24px;
+            line-height: 1.2; color: var(--text);
+        }
+        .form-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; letter-spacing: 1px;
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 6px 14px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .contact-form { display: flex; flex-direction: column; gap: 18px; flex-grow: 1; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 1.2px;
+            color: var(--text-faint); text-transform: uppercase;
+        }
+        .form-input {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--text);
+            transition: border-color 0.2s, background 0.2s;
+            width: 100%;
+        }
+        .form-input::placeholder { color: var(--text-faint); }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--purple);
+            background: rgba(163,149,245,0.05);
+        }
+        .form-textarea {
+            resize: none;
+            font-family: 'Inter', sans-serif;
+            flex-grow: 1;
+            min-height: 120px;
+        }
+        .form-group-large { flex-grow: 1; display: flex; flex-direction: column; }
+        .form-hint {
+            font-size: 11.5px; color: var(--text-faint);
+            margin-top: -4px;
+        }
+
+        .form-submit {
+            background: var(--text);
+            color: #0a0a0b;
+            border: none;
+            border-radius: 10px;
+            padding: 13px 22px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; font-weight: 600;
+            letter-spacing: 0.6px;
+            display: flex; align-items: center; justify-content: center; gap: 9px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 4px;
+        }
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 24px rgba(163,149,245,0.4);
+        }
+        .form-submit svg { width: 13px; height: 13px; }
+
+        /* RESPONSIVE */
+        @media (max-width:1080px) {
+            .contact-two-col { grid-template-columns: 1fr; gap: 40px; }
+            .contact-title { font-size: 40px; }
+        }
+        @media (max-width:760px) {
+            .shell { flex-direction:column; }
+            .sidebar { width:100%; height:auto; position:relative; flex-direction:row; align-items:center; justify-content:space-between; padding:18px 20px; border-right:none; border-bottom:1px solid var(--border-soft); }
+            .sidebar-bottom { display:none; }
+            #contact-page { padding:40px 22px 50px; }
+            .contact-title { font-size: 32px; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+        @media (prefers-reduced-motion:reduce) {
+            .reveal { opacity:1; transform:none; transition:none; }
+            * { animation-duration:0.01ms !important; }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="space-canvas"></canvas>
+    <div class="nebula nebula-a"></div>
+    <div class="nebula nebula-b"></div>
+
+    <div class="shell">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <a href="index.html" class="logo">TJ</a>
+            <a href="index.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/></svg>
+                BACK TO HOME
+            </a>
+            <div class="sidebar-bottom">
+                <div class="social-row">
+                    <a href="https://github.com/tanyaworks" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.5 2.87 8.3 6.84 9.65.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.2-3.37-1.2-.45-1.18-1.1-1.49-1.1-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.55 2.34 1.1 2.91.84.09-.66.34-1.1.62-1.36-2.22-.26-4.56-1.13-4.56-5.02 0-1.11.39-2.02 1.03-2.74-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.76 1.05a9.4 9.4 0 0 1 5.02 0c1.91-1.32 2.75-1.05 2.75-1.05.56 1.4.2 2.44.1 2.7.65.72 1.03 1.63 1.03 2.74 0 3.9-2.34 4.76-4.57 5.01.36.32.67.94.67 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg></a>
+                    <a href="https://www.linkedin.com/in/tanyajha12" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.6 4.1 5.5 3 5.5S1 4.6 1 3.5 1.9 1.5 3 1.5s1.98.9 1.98 2zM1.5 8.25h3V21h-3V8.25zM8.5 8.25h2.88v1.74h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6V21h-3v-5.92c0-1.42-.03-3.24-1.98-3.24-1.98 0-2.28 1.55-2.28 3.14V21h-3V8.25z"/></svg></a>
+                    <a href="https://dev.to/tanyajha12" target="_blank">DEV</a>
+                    <a href="mailto:jha.tanyaa12@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+                </div>
+                <div class="copyright">© 2026 Tanya Jha<br>All rights reserved.</div>
+                <div class="keep-building">keep building<br>everyday. <span class="bolt">⚡</span></div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main">
+            <section id="contact-page">
+                <div class="contact-inner contact-two-col">
+
+                    <!-- LEFT COLUMN -->
+                    <div class="contact-left reveal">
+                        <div class="contact-eyebrow">// get in touch</div>
+                        <h1 class="contact-title">Let's <span class="accent">build</span><br>something<br>great.</h1>
+                        <p class="contact-subtitle">Open to internships, collabs, and conversations about AI, code, and everything in between.</p>
+                        <div class="contact-status">
+                            <span class="dot"></span>Open to opportunities
+                        </div>
+
+                        <div class="contact-cards-vertical">
+                            <a href="mailto:jha.tanyaa12@gmail.com" class="contact-card-simple cc-purple">
+                                <div class="cc-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                                </div>
+                                <div>
+                                    <div class="cc-label">EMAIL</div>
+                                    <div class="cc-handle">jha.tanyaa12@gmail.com</div>
+                                </div>
+                                <div class="cc-arrow">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+                                </div>
+                            </a>
+
+                            <a href="https://github.com/tanyaworks" target="_blank" class="contact-card-simple cc-green">
+                                <div class="cc-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.5 2.87 8.3 6.84 9.65.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.2-3.37-1.2-.45-1.18-1.1-1.49-1.1-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.55 2.34 1.1 2.91.84.09-.66.34-1.1.62-1.36-2.22-.26-4.56-1.13-4.56-5.02 0-1.11.39-2.02 1.03-2.74-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.76 1.05a9.4 9.4 0 0 1 5.02 0c1.91-1.32 2.75-1.05 2.75-1.05.56 1.4.2 2.44.1 2.7.65.72 1.03 1.63 1.03 2.74 0 3.9-2.34 4.76-4.57 5.01.36.32.67.94.67 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+                                </div>
+                                <div>
+                                    <div class="cc-label">GITHUB</div>
+                                    <div class="cc-handle">github.com/tanyaworks</div>
+                                </div>
+                                <div class="cc-arrow">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+                                </div>
+                            </a>
+
+                            <a href="https://www.linkedin.com/in/tanyajha12" target="_blank" class="contact-card-simple cc-blue">
+                                <div class="cc-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.6 4.1 5.5 3 5.5S1 4.6 1 3.5 1.9 1.5 3 1.5s1.98.9 1.98 2zM1.5 8.25h3V21h-3V8.25zM8.5 8.25h2.88v1.74h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6V21h-3v-5.92c0-1.42-.03-3.24-1.98-3.24-1.98 0-2.28 1.55-2.28 3.14V21h-3V8.25z"/></svg>
+                                </div>
+                                <div>
+                                    <div class="cc-label">LINKEDIN</div>
+                                    <div class="cc-handle">in/tanyajha12</div>
+                                </div>
+                                <div class="cc-arrow">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+                                </div>
+                            </a>
+
+                            <a href="https://dev.to/tanyajha12" target="_blank" class="contact-card-simple cc-orange">
+                                <div class="cc-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h11l5 5v11H4z"/><path d="M9 9h6"/><path d="M9 13h6"/><path d="M9 17h3"/></svg>
+                                </div>
+                                <div>
+                                    <div class="cc-label">DEV.TO</div>
+                                    <div class="cc-handle">dev.to/tanyajha12</div>
+                                </div>
+                                <div class="cc-arrow">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN - FORM -->
+                    <div class="contact-right reveal reveal-delay-1">
+                        <div class="contact-form-card">
+                            <div class="form-header">
+                                <h2 class="form-title">Send a<br>message</h2>
+                                <span class="form-badge">opens your email app</span>
+                            </div>
+
+                            <form class="contact-form" id="contactForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="cf-name">YOUR NAME</label>
+                                        <input type="text" id="cf-name" class="form-input" placeholder="Ananya S" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="cf-email">YOUR EMAIL</label>
+                                        <input type="email" id="cf-email" class="form-input" placeholder="you@example.com" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="cf-subject">SUBJECT</label>
+                                    <input type="text" id="cf-subject" class="form-input" placeholder="Internship / collab / just chatting" required>
+                                </div>
+
+                                <div class="form-group form-group-large">
+                                    <label class="form-label" for="cf-message">MESSAGE</label>
+                                    <textarea id="cf-message" class="form-input form-textarea" placeholder="Tell me what you're building or thinking about..." rows="5" required></textarea>
+                                </div>
+
+                                <p class="form-hint">Hitting send opens your default email app with this filled in, addressed to jha.tanyaa12@gmail.com.</p>
+
+                                <button type="submit" class="form-submit">SEND MESSAGE <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        /* STARFIELD (same look as main site) */
+        (function(){
+            const canvas=document.getElementById('space-canvas'),ctx=canvas.getContext('2d');
+            let W,H,stars=[],shootingStars=[],animId;
+            function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+            function rand(a,b){return a+Math.random()*(b-a);}
+            function initStars(){stars=[];const n=Math.floor(W*H/5500);for(let i=0;i<n;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:rand(0.3,1.6),alpha:rand(0.2,1),speed:rand(0.0003,0.001),phase:Math.random()*Math.PI*2,drift:rand(-0.04,0.04)});}
+            function spawnShoot(){const s=Math.random()<0.5?'top':'right';let sx,sy,angle;if(s==='top'){sx=rand(W*0.1,W*0.9);sy=rand(-20,0);angle=rand(20,60)*Math.PI/180;}else{sx=W+10;sy=rand(0,H*0.6);angle=rand(200,240)*Math.PI/180;}const sp=rand(8,16);shootingStars.push({x:sx,y:sy,vx:Math.cos(angle)*sp,vy:Math.sin(angle)*sp,length:rand(80,180),alpha:1,life:1,decay:rand(0.012,0.022)});}
+            let lastShoot=0;
+            function loop(ts){
+                ctx.clearRect(0,0,W,H);
+                for(const s of stars){s.phase+=s.speed;const a=s.alpha*(0.55+0.45*Math.sin(s.phase));s.x+=s.drift*0.02;if(s.x<0)s.x=W;if(s.x>W)s.x=0;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${a})`;ctx.fill();}
+                if(ts-lastShoot>rand(3000,6000)){spawnShoot();lastShoot=ts;}
+                for(let i=shootingStars.length-1;i>=0;i--){const ss=shootingStars[i];ss.x+=ss.vx;ss.y+=ss.vy;ss.life-=ss.decay;if(ss.life<=0){shootingStars.splice(i,1);continue;}const nx=-ss.vy,ny=ss.vx,len=Math.sqrt(nx*nx+ny*ny)||1,tx=nx/len,ty=ny/len;const g=ctx.createLinearGradient(ss.x-ss.vx*4,ss.y-ss.vy*4,ss.x,ss.y);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(1,`rgba(255,255,255,${ss.life*0.9})`);ctx.beginPath();ctx.moveTo(ss.x-ss.vx*6+tx*1.5,ss.y-ss.vy*6+ty*1.5);ctx.lineTo(ss.x-ss.vx*6-tx*1.5,ss.y-ss.vy*6-ty*1.5);ctx.lineTo(ss.x,ss.y);ctx.closePath();ctx.fillStyle=g;ctx.fill();}
+                animId=requestAnimationFrame(loop);
+            }
+            resize();initStars();animId=requestAnimationFrame(loop);
+            window.addEventListener('resize',()=>{resize();initStars();});
+        })();
+
+        /* REVEAL ON LOAD */
+        (function(){
+            const els=document.querySelectorAll('.reveal');
+            requestAnimationFrame(()=>{
+                setTimeout(()=>els.forEach(el=>el.classList.add('visible')),60);
+            });
+        })();
+
+        /* FORM -> MAILTO */
+        (function(){
+            const form=document.getElementById('contactForm');
+            const TARGET_EMAIL='jha.tanyaa12@gmail.com';
+            form.addEventListener('submit', function(e){
+                e.preventDefault();
+                const name=document.getElementById('cf-name').value.trim();
+                const email=document.getElementById('cf-email').value.trim();
+                const subject=document.getElementById('cf-subject').value.trim();
+                const message=document.getElementById('cf-message').value.trim();
+
+                const mailSubject=`[Portfolio] ${subject}`;
+                const mailBody=`${message}\n\n—\nFrom: ${name} (${email})`;
+
+                const mailtoUrl=`mailto:${TARGET_EMAIL}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+                window.location.href=mailtoUrl;
+            });
+        })();
+    </script>
+</body>
+</html>
